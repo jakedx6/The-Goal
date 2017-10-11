@@ -6,6 +6,13 @@
   </ion-navbar>
 </ion-header>
 <ion-content padding id="page4">
+
+    <button (click)="logout()">logout</button>
+
+    <ion-item *ngFor="let item of items | async">
+        {{item | json}}
+      </ion-item>
+
   <form id="setGoal-form3">
     <h1 id="setGoal-heading1" style="color:#000000;">
       Set Goal
