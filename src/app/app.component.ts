@@ -14,7 +14,7 @@ import { LoginPage } from '../pages/login/login';
 })
 export class MyApp {
   user = null;
-  rootPage: any = SetGoalPage
+  rootPage: any = LoginPage
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private auth: AuthService) {
     platform.ready().then(() => {

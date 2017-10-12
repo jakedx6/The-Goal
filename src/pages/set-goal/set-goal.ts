@@ -15,9 +15,7 @@ export class SetGoalPage {
     public navCtrl: NavController,
     public db: AngularFireDatabase,
     public auth: AuthService
-  ) {
-    this.items = db.list('list').valueChanges();
-  }
+  ) {}
 
   goToProgress(params) {
     if (!params) params = {};

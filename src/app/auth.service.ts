@@ -23,11 +23,6 @@ export class AuthService {
 		return this.authState;
 	}
 
-	loginWithGoogle() {
-		return this.afAuth.auth.signInWithPopup(
-			new firebase.auth.GoogleAuthProvider());
-	}
-
 	isLoggedIn() {
 		if (this.currentUser == null) {
 			return false;

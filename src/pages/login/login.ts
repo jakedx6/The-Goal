@@ -12,8 +12,12 @@ export class LoginPage {
   constructor(public navCtrl: NavController, public afAuth: AngularFireAuth) {
   }
   
-  login() {
+  loginGoogle() {
     this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+  }
+
+  loginFacebook() {
+    this.afAuth.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider());    
   }
 
 }
