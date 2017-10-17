@@ -3,19 +3,27 @@ import { NavController } from 'ionic-angular';
 import { ProgressPage } from '../progress/progress';
 import { AuthService } from '../../app/auth.service';
 import { AngularFireDatabase } from 'angularfire2/database';
-import { Observable } from 'rxjs/Observable';
+import { GoalService } from '../../app/goals.service';
 
 @Component({
   selector: 'page-set-goal',
   templateUrl: 'set-goal.html'
 })
 export class SetGoalPage {
-  items: Observable<any[]>;
+  goalsCollection: any;
+  goal: string;
+
   constructor(
     public navCtrl: NavController,
     public db: AngularFireDatabase,
-    public auth: AuthService
+    public auth: AuthService,
+    private goalSvc: GoalService
   ) {}
+
+  ngOnInit(){
+    this.goalsCollection = this.goalSvc.goalsCollection;
+    this.goal = this.goalsCollection.valueChanges();
+  }
 
   goToProgress(params) {
     if (!params) params = {};
@@ -25,4 +33,10 @@ export class SetGoalPage {
   logout() {
     this.auth.logout();
   }
+  createGoal() {
+    // console.log(this.goal);
+    // this.goalSvc.createGoal(this.goal)
+    // this.navCtrl.push(ProgressPage);
+  }
+
 }

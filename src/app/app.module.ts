@@ -13,10 +13,11 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { AngularFireModule } from 'angularfire2';
 import { firebaseConfig } from '../environment';
-import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 
 import { AuthService } from './auth.service';
+import { GoalService } from './goals.service';
 
 @NgModule({
   declarations: [
@@ -29,9 +30,9 @@ import { AuthService } from './auth.service';
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-    AngularFireModule.initializeApp(firebaseConfig, 'the-goal'), // imports firebase/app needed for everything
-    AngularFireDatabaseModule, // imports firebase/database, only needed for database features
-    AngularFireAuthModule, // imports firebase/auth, only needed for auth features
+    AngularFireModule.initializeApp(firebaseConfig, 'the-goal'),
+    AngularFirestoreModule, 
+    AngularFireAuthModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -45,6 +46,7 @@ import { AuthService } from './auth.service';
     StatusBar,
     SplashScreen,
     AuthService,
+    GoalService,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

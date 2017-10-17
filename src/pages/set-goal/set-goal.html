@@ -9,27 +9,23 @@
 
     <button (click)="logout()">logout</button>
 
-    <ion-item *ngFor="let item of items | async">
-        {{item | json}}
-      </ion-item>
 
-  <form id="setGoal-form3">
     <h1 id="setGoal-heading1" style="color:#000000;">
       Set Goal
     </h1>
     <ion-item id="setGoal-textarea1">
       <ion-label>
-        Text
+        Set your goal.
       </ion-label>
-      <ion-textarea placeholder=""></ion-textarea>
+      <ion-textarea placeholder="I want to..." class="form-control" autofocus [(ngModel)]="goal" name="goal"></ion-textarea>
     </ion-item>
-  </form>
+    <p>Value: {{ goal }}</p>
   <div id="setGoal-markdown3" class="show-list-numbers-and-dots">
     <p style="color:#000000;">
       Tips:
     </p>
   </div>
-  <button id="setGoal-button6" ion-button color="positive" block on-click="goToProgress()">
+  <button id="setGoal-button6" ion-button color="positive" block on-click="createGoal()">
     Set The Goal
   </button>
 </ion-content>
