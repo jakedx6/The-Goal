@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { AuthService } from './auth.service';
+import { AuthService } from '../core/auth.service';
 
 import { SetGoalPage } from '../pages/set-goal/set-goal';
 import { LoginPage } from '../pages/login/login';
@@ -27,13 +27,11 @@ export class MyApp {
   }
 
   ngOnInit() {
-    this.auth.getAuthState().subscribe(() => {
+    this.auth.user.subscribe(() => {
         this.auth.isLoggedIn() ? this.rootPage = SetGoalPage : this.rootPage = LoginPage;
       }
     );
-
-   
-    console.log('after ' + this.auth.getAuthState());
+    console.log('after ' + this.auth.user);
   }
 
 }

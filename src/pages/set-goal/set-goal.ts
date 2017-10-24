@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { ProgressPage } from '../progress/progress';
-import { AuthService } from '../../app/auth.service';
+import { AuthService } from '../../core/auth.service';
 import { AngularFireDatabase } from 'angularfire2/database';
-import { GoalService } from '../../app/goals.service';
+import { GoalService } from '../../core/goals.service';
 
 @Component({
   selector: 'page-set-goal',
