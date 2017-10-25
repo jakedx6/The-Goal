@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { AngularFireAuth } from 'angularfire2/auth';
+
 import * as firebase from 'firebase/app';
+import { AuthService } from '../../core/auth.service';
 
 @Component({
   selector: 'page-login',
@@ -9,15 +10,15 @@ import * as firebase from 'firebase/app';
 })
 export class LoginPage {
 
-  constructor(public navCtrl: NavController, public afAuth: AngularFireAuth) {
+  constructor(public navCtrl: NavController, public afAuth: AuthService) {
   }
   
   loginGoogle() {
-    this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+    this.afAuth.googleLogin();
   }
 
-  loginFacebook() {
-    this.afAuth.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider());    
-  }
+ // loginFacebook() {
+  //  this.afAuth.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider());    
+ // }
 
 }

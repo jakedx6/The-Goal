@@ -31,7 +31,6 @@ export class MyApp {
         this.auth.isLoggedIn() ? this.rootPage = SetGoalPage : this.rootPage = LoginPage;
       }
     );
-    console.log('after ' + this.auth.user);
   }
 
 }

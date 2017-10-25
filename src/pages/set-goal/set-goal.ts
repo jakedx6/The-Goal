@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { ProgressPage } from '../progress/progress';
 import { AuthService } from '../../core/auth.service';
-import { AngularFireDatabase } from 'angularfire2/database';
+import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
 import { GoalService } from '../../core/goals.service';
 
 @Component({
@@ -15,14 +15,14 @@ export class SetGoalPage {
 
   constructor(
     public navCtrl: NavController,
-    public db: AngularFireDatabase,
+    public db: AngularFirestore,
     public auth: AuthService,
     private goalSvc: GoalService
   ) {}
 
   ngOnInit(){
-    this.goalsCollection = this.goalSvc.goalsCollection;
-    this.goal = this.goalsCollection.valueChanges();
+   // this.goalsCollection = this.goalSvc.goalsCollection;
+   // this.goal = this.goalsCollection.valueChanges();
   }
 
   goToProgress(params) {

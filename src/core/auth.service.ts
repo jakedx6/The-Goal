@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-
 import * as firebase from 'firebase/app';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/switchMap'
+
 
 interface User {
 	uid: string;
@@ -30,7 +30,7 @@ export class AuthService {
 			})
 	}
 
-	private updateUserData(user) {
+  private updateUserData(user) {
     // Sets user data to firestore on login
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${user.uid}`);
     const data: User = {
@@ -45,7 +45,8 @@ export class AuthService {
 	googleLogin() {
     const provider = new firebase.auth.GoogleAuthProvider()
     return this.oAuthLogin(provider);
-  }
+	}
+	
   private oAuthLogin(provider) {
     return this.afAuth.auth.signInWithPopup(provider)
       .then((credential) => {
@@ -54,7 +55,7 @@ export class AuthService {
 	}
 
 	isLoggedIn() {
-		if (this.user == null) {
+		if (this.afAuth.auth.currentUser == null) {
 			return false;
 		}
 		return true;
