@@ -2,16 +2,17 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { ProgressPage } from '../progress/progress';
 import { AuthService } from '../../core/auth.service';
-import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
+import { AngularFirestore, AngularFirestoreDocument, AngularFirestoreCollection } from 'angularfire2/firestore';
 import { GoalService } from '../../core/goals.service';
+
 
 @Component({
   selector: 'page-set-goal',
   templateUrl: 'set-goal.html'
 })
 export class SetGoalPage {
-  goalsCollection: any;
-  goal: string;
+  goal: any;
+  goalCollection: any;
 
   constructor(
     public navCtrl: NavController,
@@ -21,8 +22,7 @@ export class SetGoalPage {
   ) {}
 
   ngOnInit(){
-   // this.goalsCollection = this.goalSvc.goalsCollection;
-   // this.goal = this.goalsCollection.valueChanges();
+    this.goalCollection = this.goalSvc.goalsCollection;
   }
 
   goToProgress(params) {
@@ -34,9 +34,9 @@ export class SetGoalPage {
     this.auth.logout();
   }
   createGoal() {
-    // console.log(this.goal);
-    // this.goalSvc.createGoal(this.goal)
-    // this.navCtrl.push(ProgressPage);
+     console.log(this.goal);
+     this.goalSvc.createGoal(this.goal)
+     this.navCtrl.push(ProgressPage);
   }
 
 }

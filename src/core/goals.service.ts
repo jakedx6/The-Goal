@@ -5,8 +5,11 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 
 interface Goal {
+	uid: string;
 	theGoal: string;
+	count: number;
 }
+
 
 @Injectable()
 export class GoalService {
@@ -27,13 +30,18 @@ export class GoalService {
 //     this.goals = this.db.list(`goals/${this.userId}`);
 //     return this.goals
 //   }
-//   createGoal(goal: Goal)  {
-//     this.goals.push(goal) 
-//   }
-
-getTheGoal(){
+   createGoal(goal: Goal)  {
 	this.goalsCollection = this.db.collection('goals');
-	this.goals = this.goalsCollection.valueChanges();
-}
+	this.goalsCollection.doc("Goal").set({
+		uid: this.userId,
+		theGoal: goal,
+		count: 0,
+	})
+   }
+
+//getTheGoal(){
+//	this.goalsCollection = this.db.collection('goals');
+//	this.goals = this.goalsCollection.valueChanges();
+//}
 
 }
