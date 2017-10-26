@@ -6,7 +6,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/switchMap'
 
 
-interface User {
+export interface User {
 	uid: string;
 	email: string;
 	photoURL?: string;
@@ -15,7 +15,6 @@ interface User {
 
 @Injectable()
 export class AuthService {
-
 	user: Observable<User>;
 
 	constructor(private afAuth: AngularFireAuth,
@@ -30,28 +29,36 @@ export class AuthService {
 			})
 	}
 
-  private updateUserData(user) {
-    // Sets user data to firestore on login
-    const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${user.uid}`);
-    const data: User = {
-      uid: user.uid,
-      email: user.email,
-      displayName: user.displayName,
-      photoURL: user.photoURL
-    }
-    return userRef.set(data)
-  }
+	private updateUserData(user) {
+		// Sets user data to firestore on login
+		const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${user.uid}`);
+		const data: User = {
+			uid: user.uid,
+			email: user.email,
+			displayName: user.displayName,
+			photoURL: user.photoURL
+		}
+		return userRef.set(data)
+	}
+
+	getUserId() {
+		return this.afAuth.auth.currentUser.uid
+	}
+
+	getUserName() {
+		return this.afAuth.auth.currentUser.displayName
+	}
 
 	googleLogin() {
-    const provider = new firebase.auth.GoogleAuthProvider()
-    return this.oAuthLogin(provider);
+		const provider = new firebase.auth.GoogleAuthProvider()
+		return this.oAuthLogin(provider);
 	}
-	
-  private oAuthLogin(provider) {
-    return this.afAuth.auth.signInWithPopup(provider)
-      .then((credential) => {
-        this.updateUserData(credential.user)
-      })
+
+	private oAuthLogin(provider) {
+		return this.afAuth.auth.signInWithPopup(provider)
+			.then((credential) => {
+				this.updateUserData(credential.user)
+			})
 	}
 
 	isLoggedIn() {

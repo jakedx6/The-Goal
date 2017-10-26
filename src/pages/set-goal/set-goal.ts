@@ -34,7 +34,6 @@ export class SetGoalPage {
     this.auth.logout();
   }
   createGoal() {
-     console.log(this.goal);
      this.goalSvc.createGoal(this.goal)
      this.navCtrl.push(ProgressPage);
   }
