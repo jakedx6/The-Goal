@@ -11,13 +11,16 @@
       {{ theGoal }}
 
   </div>
-  <button id="progress-button1" ion-button color="positive" block>
+  <button id="progress-button1" (click)="addOne()" ion-button color="positive" block>
     On Track
   </button>
   <div id="progress-markdown2" class="show-list-numbers-and-dots">
-      {{ goalCount }}
+      {{ theCount }}
   </div>
-  <button id="progress-button2" ion-button color="assertive" block>
+  <button id="progress-button2" (click)="subtractOne()" ion-button color="assertive" block>
     Off Track
   </button>
+  <div *ngFor="let item of history | async">
+    <span>{{ item | json }}</span>
+  </div>
 </ion-content>

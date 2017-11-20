@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
-import { AngularFireAuth } from 'angularfire2/auth';
+import { AngularFirestore } from 'angularfire2/firestore';
 import { Observable } from 'rxjs/Observable';
 import { AuthService } from './auth.service';
 import 'rxjs/add/operator/map';
@@ -8,34 +7,32 @@ import 'rxjs/add/operator/map';
 export interface Goal {
 	uid: string;
 	theGoal: any;
-	count: number;
 	createdAt: Date;
+}
+
+export interface History {
+	createdAt: Date,
+	count:  number,
+	countChange: number 
 }
 
 
 @Injectable()
 export class GoalService {
 	user: any;
-	userId: string;
-	currentUserId: string;
-	goalsCollection: AngularFirestoreCollection<Goal>;
 	goals: Observable<Goal[]>;
+	goalsCollection = this.db.collection('goals');
+	currentUserId = this.auth.getUserId();
+	currentUsername = this.auth.getUserName();
+	thegoal = this.db.collection<Goal>('goals', ref => ref.where('uid', '==', this.currentUserId));
+	historylist = this.thegoal.doc("Goal " + this.currentUsername).collection<History>("history", ref => ref.orderBy('createdAt', 'desc'));
 
-	constructor(private db: AngularFirestore,
-		private afAuth: AngularFireAuth,
-		private auth: AuthService) {
-		this.afAuth.authState.subscribe(user => {
-			if (user) this.userId = user.uid
-		})
-	}
+	constructor(private db: AngularFirestore, private auth: AuthService) {}
 
 	createGoal(goal: Goal) {
-		this.goalsCollection = this.db.collection('goals'); // collection reference 
-		
-		this.goalsCollection.doc("Goal " + this.auth.getUserName()).set({
-			uid: this.userId,
+		this.goalsCollection.doc("Goal " + this.currentUsername).set({
+			uid: this.currentUserId,
 			theGoal: goal,
-			count: 0,
 			createdAt: new Date()
 		})
 			.then(function () {
@@ -48,9 +45,18 @@ export class GoalService {
 
 
 	getTheGoal(){
-		this.currentUserId = this.auth.getUserId();	
-		let thegoal = this.db.collection<Goal>('goals', ref => ref.where('uid', '==', this.currentUserId)); // collection reference
-		return thegoal.valueChanges();
+		return this.thegoal.valueChanges()
 	}
 
+	getTheHistory(){
+		return this.historylist.valueChanges()
+	}
+
+	saveNewGoalCount(change, oldCount){
+		this.goalsCollection.doc("Goal " + this.currentUsername).collection("history").add({
+			createdAt: new Date(),
+			count: (change + oldCount),
+			countChange: change 
+		})
+	}
 }

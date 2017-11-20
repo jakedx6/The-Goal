@@ -9,7 +9,8 @@ import { GoalService } from '../../core/goals.service';
   templateUrl: 'progress.html'
 })
 export class ProgressPage {
-  goalCount: any;
+  theHistory: any;
+  theCount: any;
   theGoals: any;
   theGoal: any;
   userid: any;
@@ -23,16 +24,34 @@ export class ProgressPage {
   }
   
   ngOnInit(){
-    console.log(this.goalSvc.getTheGoal());
     this.theGoals = this.goalSvc.getTheGoal();
     this.theGoals.subscribe(goal => {
       this.theGoal = goal[0].theGoal;
-      this.goalCount = goal[0].count;
-      console.log(this.goalCount);
     } )
-
-    
+    this.refreshCount(); 
+    this.theHistory = this.goalSvc.getTheHistory();
   }
 
+  addOne(value){
+    this.goalSvc.saveNewGoalCount(1,this.theCount);
+    this.refreshCount();
+  }
+
+  subtractOne(value){
+    this.goalSvc.saveNewGoalCount(-1,this.theCount);
+    this.refreshCount();
+  }
+
+  refreshCount(){
+    this.theHistory = this.goalSvc.getTheHistory();
+    this.theHistory.subscribe(count => {
+      if (count == undefined || count.length == 0 ) {
+         this.goalSvc.saveNewGoalCount(0,0);
+         this.refreshCount();
+       } else {
+        this.theCount =  count[0].count;
+       } 
+    } )
+  }
 
 }
