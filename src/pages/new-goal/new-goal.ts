@@ -4,12 +4,11 @@ import { ProgressPage } from '../progress/progress';
 import { AuthService } from '../../core/auth.service';
 import { GoalService } from '../../core/goals.service';
 
-
 @Component({
-  selector: 'page-set-goal',
-  templateUrl: 'set-goal.html'
+  selector: 'page-newgoal',
+  templateUrl: 'new-goal.html'
 })
-export class SetGoalPage {
+export class NewGoalPage {
   goalCollection: any;
   theGoal: any;
   goal: any;
@@ -21,11 +20,6 @@ export class SetGoalPage {
   ) {}
 
   ngOnInit(){
-   this.goalSvc.theGoal.valueChanges().subscribe(goal => {
-       if (goal.length > 0){
-         this.navCtrl.push(ProgressPage);
-       }
-    });
     this.goalCollection = this.goalSvc.goalsCollection;
   }
 
@@ -43,3 +37,4 @@ export class SetGoalPage {
   }
 
 }
+

@@ -1,8 +1,8 @@
 export const firebaseConfig = {
-    apiKey: "AIzaSyDhheEuuyjLrB2Waj7qyvUQ_Pc9ycpucA4",
-    authDomain: "the-goal.firebaseapp.com",
-    databaseURL: "https://the-goal.firebaseio.com",
-    projectId: "the-goal",
-    storageBucket: "the-goal.appspot.com",
-    messagingSenderId: "568282335668"
-  };
+  apiKey: "AIzaSyCI1C4BI3zqKRDPkZeuZKQh5umEfyOeBOA",
+  authDomain: "the-goal-ae47b.firebaseapp.com",
+  databaseURL: "https://the-goal-ae47b.firebaseio.com",
+  projectId: "the-goal-ae47b",
+  storageBucket: "the-goal-ae47b.appspot.com",
+  messagingSenderId: "364413516258"
+};

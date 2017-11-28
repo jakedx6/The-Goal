@@ -3,6 +3,7 @@ import { NavController } from 'ionic-angular';
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
 import { AuthService } from '../../core/auth.service';
 import { GoalService } from '../../core/goals.service';
+import { NewGoalPage } from '../new-goal/new-goal';
 
 @Component({
   selector: 'page-progress',
@@ -20,38 +21,41 @@ export class ProgressPage {
     public db: AngularFirestore,
     public auth: AuthService,
     private goalSvc: GoalService) {
-      
+
   }
-  
-  ngOnInit(){
+
+  ngOnInit() {
     this.theGoals = this.goalSvc.getTheGoal();
     this.theGoals.subscribe(goal => {
-      this.theGoal = goal[0].theGoal;
-    } )
-    this.refreshCount(); 
+      if (goal.length > 0){
+        this.theGoal = goal[0].theGoal;
+      } else {
+        console.log('error goal not found')
+      }
+    })
+    this.refreshCount();
     this.theHistory = this.goalSvc.getTheHistory();
   }
 
-  addOne(value){
-    this.goalSvc.saveNewGoalCount(1,this.theCount);
+  addOne(value) {
+    this.goalSvc.saveNewGoalCount(1, this.theCount);
     this.refreshCount();
   }
 
-  subtractOne(value){
-    this.goalSvc.saveNewGoalCount(-1,this.theCount);
+  subtractOne(value) {
+    this.goalSvc.saveNewGoalCount(-1, this.theCount);
     this.refreshCount();
   }
 
-  refreshCount(){
+  refreshCount() {
     this.theHistory = this.goalSvc.getTheHistory();
     this.theHistory.subscribe(count => {
-      if (count == undefined || count.length == 0 ) {
-         this.goalSvc.saveNewGoalCount(0,0);
-         this.refreshCount();
-       } else {
-        this.theCount =  count[0].count;
-       } 
-    } )
+      this.theCount = count[0].count;
+    })
+  }
+
+  updateGoal(){
+    this.navCtrl.push(NewGoalPage);
   }
 
 }

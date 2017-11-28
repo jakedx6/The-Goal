@@ -5,7 +5,7 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 
 import { ProgressPage } from '../pages/progress/progress';
 import { LoginPage } from '../pages/login/login';
-import { SignupPage } from '../pages/signup/signup';
+import { NewGoalPage } from '../pages/new-goal/new-goal';
 import { SetGoalPage } from '../pages/set-goal/set-goal';
 import { IonicModule } from 'ionic-angular';
 import { AuthService } from './auth.service';
@@ -15,7 +15,7 @@ import { GoalService } from './goals.service';
   declarations: [
     ProgressPage,
     LoginPage,
-    SignupPage,
+    NewGoalPage,
     SetGoalPage
   ],
   imports: [
@@ -23,13 +23,13 @@ import { GoalService } from './goals.service';
     AngularFireAuthModule,
     IonicModule.forRoot(LoginPage),
     IonicModule.forRoot(ProgressPage),
-    IonicModule.forRoot(SignupPage),
+    IonicModule.forRoot(NewGoalPage),
     IonicModule.forRoot(SetGoalPage)
   ],
   entryComponents: [
     ProgressPage,
     LoginPage,
-    SignupPage,
+    NewGoalPage,
     SetGoalPage
   ],
   providers: [

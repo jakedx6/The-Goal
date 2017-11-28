@@ -1,26 +1,20 @@
-<ion-header>
-  <ion-navbar>
-    <ion-title>
-      Progress
-    </ion-title>
-  </ion-navbar>
-</ion-header>
-<ion-content padding id="page1">
-  <div id="progress-markdown1" class="show-list-numbers-and-dots">
-     
-      {{ theGoal }}
 
+<ion-content padding id="page1">
+  <div class="progress-goal">
+      {{ theGoal }}
   </div>
-  <button id="progress-button1" (click)="addOne()" ion-button color="positive" block>
-    On Track
+  <button (click)="addOne()" ion-button color="positive" block>
+    I am doing well!
   </button>
-  <div id="progress-markdown2" class="show-list-numbers-and-dots">
+  <div class="progress-count">
       {{ theCount }}
   </div>
-  <button id="progress-button2" (click)="subtractOne()" ion-button color="assertive" block>
-    Off Track
+  <button (click)="subtractOne()" ion-button color="assertive" block>
+    I had a moment of weakness.
   </button>
-  <div *ngFor="let item of history | async">
-    <span>{{ item | json }}</span>
-  </div>
+
+  <button (click)="updateGoal()" ion-button color="assertive" block>
+    Reset Goal
+  </button>
+
 </ion-content>

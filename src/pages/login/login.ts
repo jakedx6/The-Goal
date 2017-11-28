@@ -15,8 +15,4 @@ export class LoginPage {
     this.afAuth.googleLogin();
   }
 
- // loginFacebook() {
-  //  this.afAuth.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider());    
- // }
-
 }

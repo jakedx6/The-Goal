@@ -12,22 +12,23 @@ export interface Goal {
 
 export interface History {
 	createdAt: Date,
-	count:  number,
-	countChange: number 
+	count: number,
+	countChange: number
 }
 
 
 @Injectable()
 export class GoalService {
+	navCtrl: any;
 	user: any;
 	goals: Observable<Goal[]>;
 	goalsCollection = this.db.collection('goals');
 	currentUserId = this.auth.getUserId();
 	currentUsername = this.auth.getUserName();
-	thegoal = this.db.collection<Goal>('goals', ref => ref.where('uid', '==', this.currentUserId));
-	historylist = this.thegoal.doc("Goal " + this.currentUsername).collection<History>("history", ref => ref.orderBy('createdAt', 'desc'));
+	theGoal = this.db.collection<Goal>('goals', ref => ref.where('uid', '==', this.currentUserId));
+	historyListQuery = this.theGoal.doc("Goal " + this.currentUsername).collection<History>("history", ref => ref.orderBy('createdAt', 'desc'));
 
-	constructor(private db: AngularFirestore, private auth: AuthService) {}
+	constructor(private db: AngularFirestore, private auth: AuthService) { }
 
 	createGoal(goal: Goal) {
 		this.goalsCollection.doc("Goal " + this.currentUsername).set({
@@ -41,22 +42,40 @@ export class GoalService {
 			.catch(function (error) {
 				console.error("Error writing document: ", error);
 			});
+		this.saveNewGoalCount(0, 0);
 	}
 
 
-	getTheGoal(){
-		return this.thegoal.valueChanges()
+	getTheGoal() {
+		return this.theGoal.valueChanges()
 	}
 
-	getTheHistory(){
-		return this.historylist.valueChanges()
+	getTheHistory() {
+		return this.historyListQuery.valueChanges()
 	}
 
-	saveNewGoalCount(change, oldCount){
+	saveNewGoalCount(change, oldCount) {
 		this.goalsCollection.doc("Goal " + this.currentUsername).collection("history").add({
 			createdAt: new Date(),
 			count: (change + oldCount),
-			countChange: change 
+			countChange: change
 		})
+			.then(function () {
+				console.log("Save successfully!");
+			})
+			.catch(function (error) {
+				console.error("Error writing document: ", error);
+			});
+	}
+
+	endTheGoal() {
+		this.theGoal.doc("Goal " + this.currentUsername).delete();
+	}
+
+	uuidv4() {
+		return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+			var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+			return v.toString(16);
+		});
 	}
 }
